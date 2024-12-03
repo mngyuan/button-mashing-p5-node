@@ -13,11 +13,11 @@ const port = 3000;
 // with a 'score' key and a 'name' key
 const gamestate = {};
 
-io.on('connection', (socket) => {
+io.on('connection', function (socket) {
   console.log('a user connected');
 
   // handle new 'point' messages
-  socket.on('point', () => {
+  socket.on('point', function () {
     if (gamestate[socket.id] == undefined) {
       // if we haven't recorded this players score yet (new player)
       // initialize their score
@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   });
 
   // handle new 'name' messages
-  socket.on('name', (name) => {
+  socket.on('name', function (name) {
     gamestate[socket.id].name = name;
     // inform everyone
     io.emit('state: ', gamestate);
@@ -42,6 +42,6 @@ io.on('connection', (socket) => {
 // i.e. so index.html, sketch.js can be downloaded normally
 app.use(express.static('.'));
 
-server.listen(port, () => {
+server.listen(port, function () {
   console.log('Game app listening on port ' + port);
 });
