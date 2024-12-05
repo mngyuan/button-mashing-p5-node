@@ -32,6 +32,9 @@ io.on('connection', function (socket) {
 
   // handle new 'name' messages
   socket.on('name', function (name) {
+    if (gamestate[socket.id] == undefined) {
+      gamestate[socket.id] = {score: 0};
+    }
     gamestate[socket.id].name = name;
     // inform everyone
     io.emit('state: ', gamestate);
